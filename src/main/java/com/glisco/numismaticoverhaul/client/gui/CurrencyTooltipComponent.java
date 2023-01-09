@@ -12,6 +12,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -79,7 +80,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
 
     private static Text createPlaceholder(int count) {
         String placeholder = "§7   " + count + " ";
-        return Text.literal(placeholder).formatted(Formatting.GRAY);
+        return new LiteralText(placeholder).formatted(Formatting.GRAY);
     }
 
 }

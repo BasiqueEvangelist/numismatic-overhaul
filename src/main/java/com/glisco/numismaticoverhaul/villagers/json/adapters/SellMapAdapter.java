@@ -14,18 +14,19 @@ import net.minecraft.item.map.MapIcon;
 import net.minecraft.item.map.MapState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
-import net.minecraft.world.gen.structure.StructureKeys;
+import net.minecraft.world.gen.feature.ConfiguredStructureFeatureKeys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Random;
 
 public class SellMapAdapter extends TradeJsonAdapter {
 
@@ -61,7 +62,7 @@ public class SellMapAdapter extends TradeJsonAdapter {
         public TradeOffer create(Entity entity, Random random) {
             if (!(entity.world instanceof ServerWorld serverWorld)) return null;
 
-            final var registry = serverWorld.getRegistryManager().get(Registry.STRUCTURE_KEY);
+            final var registry = serverWorld.getRegistryManager().get(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY);
             final var feature = RegistryAccess.getEntry(registry, this.structureId);
 
             if (feature == null || feature.getKey().isEmpty()) {
@@ -76,17 +77,17 @@ public class SellMapAdapter extends TradeJsonAdapter {
             final var blockPos = result.getFirst();
 
             var iconType = MapIcon.Type.TARGET_X;
-            if (feature.matchesId(StructureKeys.MONUMENT.getValue()))
+            if (feature.matchesId(ConfiguredStructureFeatureKeys.MONUMENT.getValue()))
                 iconType = MapIcon.Type.MONUMENT;
-            if (feature.matchesId(StructureKeys.MANSION.getValue()))
+            if (feature.matchesId(ConfiguredStructureFeatureKeys.MANSION.getValue()))
                 iconType = MapIcon.Type.MANSION;
-            if (feature.matchesId(StructureKeys.PILLAGER_OUTPOST.getValue()))
+            if (feature.matchesId(ConfiguredStructureFeatureKeys.PILLAGER_OUTPOST.getValue()))
                 iconType = MapIcon.Type.TARGET_POINT;
 
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);
             MapState.addDecorationsNbt(itemStack, blockPos, "+", iconType);
-            itemStack.setCustomName(Text.translatable("filled_map." + feature.getKey().get().getValue().getPath().toLowerCase(Locale.ROOT)));
+            itemStack.setCustomName(new TranslatableText("filled_map." + feature.getKey().get().getValue().getPath().toLowerCase(Locale.ROOT)));
             return new TradeOffer(CurrencyHelper.getClosest(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
         }
     }

@@ -7,8 +7,10 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,14 +69,14 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         List<ItemStack> transactionStacks = CurrencyConverter.getAsItemStackList(tempValue);
         if (transactionStacks.isEmpty()) return;
 
-        MutableText message = value < 0 ? Text.literal("§c- ") : Text.literal("§a+ ");
-        message.append(Text.literal("§7["));
+        MutableText message = value < 0 ? new LiteralText("§c- ") : new LiteralText("§a+ ");
+        message.append(new LiteralText("§7["));
         for (ItemStack stack : transactionStacks) {
-            message.append(Text.literal("§b" + stack.getCount() + " "));
-            message.append(Text.translatable("currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase()));
-            if (transactionStacks.indexOf(stack) != transactionStacks.size() - 1) message.append(Text.literal(", "));
+            message.append(new LiteralText("§b" + stack.getCount() + " "));
+            message.append(new TranslatableText("currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase()));
+            if (transactionStacks.indexOf(stack) != transactionStacks.size() - 1) message.append(new LiteralText(", "));
         }
-        message.append(Text.literal("§7]"));
+        message.append(new LiteralText("§7]"));
 
         provider.sendMessage(message, true);
     }

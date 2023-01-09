@@ -10,7 +10,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.wispforest.owo.offline.OfflineDataLookup;
 import io.wispforest.owo.ops.TextOps;
-import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
@@ -22,7 +21,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class NumismaticCommand {
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean isDedicated) {
         dispatcher.register(literal("numismatic")
                 .then(literal("balance").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                         .then(argument("player", EntityArgumentType.players())

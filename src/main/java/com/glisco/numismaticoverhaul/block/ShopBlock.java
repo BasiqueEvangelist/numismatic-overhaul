@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -79,7 +80,7 @@ public class ShopBlock extends BlockWithEntity {
 
         ((ShopMerchant) shop.getMerchant()).updateTrades();
         shop.getMerchant().setCustomer(player);
-        shop.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.shop.merchant_title"), 0);
+        shop.getMerchant().sendOffers(player, new TranslatableText("gui.numismatic-overhaul.shop.merchant_title"), 0);
 
         return ActionResult.SUCCESS;
     }

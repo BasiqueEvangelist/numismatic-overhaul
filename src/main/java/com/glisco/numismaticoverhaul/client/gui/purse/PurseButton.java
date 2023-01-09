@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
+import net.minecraft.text.TranslatableText;
 
 public class PurseButton extends TexturedButtonWidget {
 
@@ -23,7 +24,7 @@ public class PurseButton extends TexturedButtonWidget {
         super(x, y, 11, 13, 62, 0, 13, PurseWidget.TEXTURE, pressAction);
         this.currencyStorage = ModComponents.CURRENCY.get(player);
         this.parent = parent;
-        this.TOOLTIP_TITLE = Text.translatable("gui.numismatic-overhaul.purse_title").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Currency.GOLD.getNameColor())));
+        this.TOOLTIP_TITLE = new TranslatableText("gui.numismatic-overhaul.purse_title").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Currency.GOLD.getNameColor())));
     }
 
     @Override

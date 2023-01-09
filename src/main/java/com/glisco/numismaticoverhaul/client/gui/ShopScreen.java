@@ -27,7 +27,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.lwjgl.glfw.GLFW;
@@ -88,9 +90,9 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         if (this.uiAdapter == null) return;
 
         long[] storedCurrency = CurrencyResolver.splitValues(data.storedCurrency());
-        this.component(LabelComponent.class, "bronze-count").text(Text.literal(String.valueOf(storedCurrency[0])));
-        this.component(LabelComponent.class, "silver-count").text(Text.literal(String.valueOf(storedCurrency[1])));
-        this.component(LabelComponent.class, "gold-count").text(Text.literal(String.valueOf(storedCurrency[2])));
+        this.component(LabelComponent.class, "bronze-count").text(new LiteralText(String.valueOf(storedCurrency[0])));
+        this.component(LabelComponent.class, "silver-count").text(new LiteralText(String.valueOf(storedCurrency[1])));
+        this.component(LabelComponent.class, "gold-count").text(new LiteralText(String.valueOf(storedCurrency[2])));
 
         int prevOffers = this.offers.size();
         this.offers.clear();
@@ -106,8 +108,8 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
 
         this.component(FlowLayout.class, "transfer-button").tooltip(
                 data.transferEnabled()
-                        ? Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.enabled")
-                        : Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.disabled")
+                        ? new TranslatableText("gui.numismatic-overhaul.shop.transfer_tooltip.enabled")
+                        : new TranslatableText("gui.numismatic-overhaul.shop.transfer_tooltip.disabled")
         );
         this.component(LabelComponent.class, "transfer-label").text(
                 data.transferEnabled()
@@ -154,9 +156,9 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
                 this.afterDataUpdate();
 
                 var price = CurrencyResolver.splitValues(s.isBlank() ? 0 : Integer.parseInt(s));
-                this.component(LabelComponent.class, "offer-bronze-count").text(Text.literal(String.valueOf(price[0])));
-                this.component(LabelComponent.class, "offer-silver-count").text(Text.literal(String.valueOf(price[1])));
-                this.component(LabelComponent.class, "offer-gold-count").text(Text.literal(String.valueOf(price[2])));
+                this.component(LabelComponent.class, "offer-bronze-count").text(new LiteralText(String.valueOf(price[0])));
+                this.component(LabelComponent.class, "offer-silver-count").text(new LiteralText(String.valueOf(price[1])));
+                this.component(LabelComponent.class, "offer-gold-count").text(new LiteralText(String.valueOf(price[2])));
             });
 
             submitButton.onPress((ButtonComponent button) -> this.handler.createOffer(Integer.parseInt(priceField.getText())));
